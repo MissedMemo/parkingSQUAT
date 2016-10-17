@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 export default () => <View>
-  <Text style={ styles.demo }>Hey, there!</Text>
+  <Text style={ styles.demo }>Hello!</Text>
 </View>;
 
 const styles = StyleSheet.create({
