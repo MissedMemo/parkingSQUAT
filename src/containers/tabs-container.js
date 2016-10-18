@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import NavTabs from '../components/nav-tabs';
-/*import { changeTab } from '../actions/nav-actions';*/
+import { selectTab } from '../actions/nav-actions';
 
 const mapStateToProps = (state) => ({
+  tabs: state.tabsReducer
 });
 
-export default connect( mapStateToProps )(NavTabs);
+export default connect( mapStateToProps, {selectTab} )(NavTabs);
