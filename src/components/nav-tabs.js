@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { TabBarIOS } from 'react-native';
+import { TabBarIOS, View, StyleSheet } from 'react-native';
+import TitleBar from './titlebar';
 import Search from './search-view';
 import Reservations from './reservations-view';
 import Map from './map-view';
@@ -30,6 +31,17 @@ export default class NavTabs extends Component {
       </TabBarIOS.Item>
     );
 
-    return <TabBarIOS tintColor='black'>{ tabs }</TabBarIOS>;
+    return <View style={ styles.container }>
+      <TitleBar title='Parking SQUAT' />
+      <TabBarIOS tintColor='black'>
+        { tabs }
+      </TabBarIOS>
+    </View>;
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});

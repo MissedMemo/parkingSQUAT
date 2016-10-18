@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   temp: {
     color: 'blue',
     fontSize: 32,
-    textAlign: 'center',
-    marginTop: 40
+    textAlign: 'center'
   }
 });
