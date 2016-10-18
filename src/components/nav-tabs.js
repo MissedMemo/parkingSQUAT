@@ -33,7 +33,7 @@ export default class NavTabs extends Component {
 
     return <View style={ styles.container }>
       <TitleBar title={ 'Parking SQUAT'.toUpperCase() } />
-      <TabBarIOS tintColor='black'>
+      <TabBarIOS tintColor='white' barTintColor='black'>
         { tabs }
       </TabBarIOS>
     </View>;

@@ -1,19 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { MapView, StyleSheet } from 'react-native';
 
-export default () => (
-  <View>
-    <Text style={styles.temp}>
-      This will be our MAP view...
-    </Text>
-  </View>
-);
+export default () => <MapView 
+  showsPointsOfInterest={false}
+  showsUserLocation={true}
+  followUserLocation={true}
+  style={styles.map}
+/>;
 
 const styles = StyleSheet.create({
-  temp: {
-    color: 'green',
-    fontSize: 32,
-    textAlign: 'center',
-    marginTop: 40
+  map: {
+    flex: 1
   }
 });

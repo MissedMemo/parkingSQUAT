@@ -20,7 +20,7 @@ const initialState = {
   tabs: [
     { key: 'search',  icon: searchIcon,   title: 'Search'     },
     { key: 'manage',  icon: documentIcon, title: 'Manage'     },
-    { key: 'find-me', icon: personIcon,   title: 'Zoom on Me' }
+    { key: 'find-me', icon: personIcon,   title: 'Where am I?' }
   ]
 };
 
