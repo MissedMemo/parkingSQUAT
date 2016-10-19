@@ -1,11 +1,14 @@
 import React from 'react';
-import { MapView, StyleSheet } from 'react-native';
+import MapView from 'react-native-maps';
+import { StyleSheet } from 'react-native';
 
-export default () => <MapView 
-  showsPointsOfInterest={false}
-  showsUserLocation={true}
-  followUserLocation={true}
-  style={styles.map}
+export default () => <MapView
+  initialRegion={{
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  }} style={styles.map}
 />;
 
 const styles = StyleSheet.create({
@@ -13,3 +16,4 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
