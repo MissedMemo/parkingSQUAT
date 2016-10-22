@@ -11,9 +11,9 @@ export default class NavTabs extends Component {
     switch (key) {
       case 'search':
         return <Search />;
-      case 'manage':
+      case 'reservations':
         return <Reservations />;
-      case 'find-me':
+      case 'map':
         return <Map centerOnCar={true} />;
     }
   }
