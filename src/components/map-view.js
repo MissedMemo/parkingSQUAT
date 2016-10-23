@@ -18,8 +18,44 @@ export default class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      region: null
+      region: null,
+      mapMarkers: [
+        {
+          title: 'marker A',
+          description: 'testing...',
+          coords: {
+            latitude: 37.8721366,
+            longitude: -122.2702216
+          }
+        },
+        {
+          title: 'marker B',
+          description: 'testing...',
+          coords: {
+            latitude: 37.869960,
+            longitude: -122.2711953
+          }
+        },
+        {
+          title: 'marker C',
+          description: 'testing...',
+          coords: {
+            latitude: 37.870796,
+            longitude: -122.266218
+          }
+        },
+        {
+          title: 'marker D',
+          description: 'testing...',
+          coords: {
+            latitude: 37.874609,
+            longitude: -122.269019
+          }
+        }
+      ]
     };
+
+    this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
   }
 
   componentWillMount() {
@@ -36,6 +72,7 @@ export default class Map extends Component {
   }
 
   updateRegion( position ) {
+    console.log( 'coords:', position.coords );
     const region = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
@@ -45,13 +82,26 @@ export default class Map extends Component {
     this.setState({ region });
   }
 
+  onRegionChangeComplete( region ) {
+    console.log( 'new region:', region );
+  }
+
   render() {
     return <MapView 
       style = {styles.map}
       showsUserLocation = {true}
       followUserLocation={true}
+      onRegionChangeComplete={ this.onRegionChangeComplete }
       region={this.state.region}
-    />;
+    >
+      { this.state.mapMarkers.map( marker =>
+        <MapView.Marker key={ marker.title }
+          coordinate={ marker.coords }
+          title={ marker.title }
+          description={ marker.description }
+        />
+      )}
+    </MapView>;
   }
 }
 
