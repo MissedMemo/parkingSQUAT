@@ -2,22 +2,26 @@
 
 ##a React Native parking space reservation system
 
-###deployed to: &nbsp; [(fabric url)](#)
 
 ###Tech. Stack:
 * React Native (ES6 syntax)
-* Navigator
-* Map (uses Geolocation)
-* Mocha/Chai/Enzyme (unit testing)
+* Redux -- via NavigationExperimental, [the recommended new nav. model](https://medium.com/@dabit3/react-native-what-navigator-should-i-use-2ff59ec2b2d#.b78a9j7j0)
+* react-native-map, the recommended alternative to MapView (requires Cocoa Podfile setup)
 * Fetch (remote comms)
-* deployed to Fabric
-* parking API: [(some url)](#)
+* deployed to fabric.io (?)
+* San Francisco parking data from [(RideCell's public API)](http://ridecellparking.herokuapp.com/api/v1/parkinglocations)
+
+###Important!
+
+The application will automatically zoom to the user's detected lat-long coordinates at startup, but RideCell parking data is limited to San Francisco. For an effective demo, please set the user's simulated current location via the XCode mobile simulator menu: (Debug/Location/Custom Location)
+
+latitude: 37.801242, longitude: -122.4012767
 
 ##Building & Running:
 
 (at command line): navigate to the implementation directory and type react-native run-ios
 
-(in Finder): navigate to the 'ios' sub-directory in your source code files, and run the file with the .xcodeproj extension.
+(in Finder): navigate to the 'ios' sub-directory in your source code files, and run the file showing the .xcodeproj extension.
 
 ##Implementation Notes:
 
