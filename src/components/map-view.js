@@ -71,25 +71,29 @@ export default class Map extends Component {
   }
 
   render() {
-    return <MapView 
-      style = {styles.map}
-      showsUserLocation = {true}
-      followUserLocation={true}
-      onRegionChangeComplete={ this.onRegionChangeComplete }
-      region={this.state.region}
-    >
-      { this.state.parkingSpots.map( spot => {
-        return <MapView.Marker key={ spot.id }
-          coordinate={{
-            latitude: parseFloat(spot.lat),
-            longitude: parseFloat(spot.lng)
-          }}
-          title={ spot.name }
-          description={ 'no description' }
-          image={ mapPin_ParkingSpot }
-        />;
-      })}
-    </MapView>;
+    if ( !this.state.region ) {
+      return null;
+    } else {
+      return <MapView 
+        style = {styles.map}
+        showsUserLocation = {true}
+        followUserLocation={true}
+        onRegionChangeComplete={ this.onRegionChangeComplete }
+        region={this.state.region}
+      >
+        { this.state.parkingSpots.map( spot => {
+          return <MapView.Marker key={ spot.id }
+            coordinate={{
+              latitude: parseFloat(spot.lat),
+              longitude: parseFloat(spot.lng)
+            }}
+            title={ spot.name }
+            description={ 'no description' }
+            image={ mapPin_ParkingSpot }
+          />;
+        })}
+      </MapView>;
+    }
   }
 }
 
