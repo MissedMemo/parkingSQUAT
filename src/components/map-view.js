@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MapView from 'react-native-maps';
+import { availableParking } from '../remote-comms/api';
 import { Dimensions, StyleSheet } from 'react-native';
+import mapPin_ParkingSpot from './map-pin.png';
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -19,40 +21,7 @@ export default class Map extends Component {
     super(props);
     this.state = {
       region: null,
-      mapMarkers: [
-        {
-          title: 'marker A',
-          description: 'testing...',
-          coords: {
-            latitude: 37.8721366,
-            longitude: -122.2702216
-          }
-        },
-        {
-          title: 'marker B',
-          description: 'testing...',
-          coords: {
-            latitude: 37.869960,
-            longitude: -122.2711953
-          }
-        },
-        {
-          title: 'marker C',
-          description: 'testing...',
-          coords: {
-            latitude: 37.870796,
-            longitude: -122.266218
-          }
-        },
-        {
-          title: 'marker D',
-          description: 'testing...',
-          coords: {
-            latitude: 37.874609,
-            longitude: -122.269019
-          }
-        }
-      ]
+      parkingSpots: []
     };
 
     this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
@@ -72,7 +41,6 @@ export default class Map extends Component {
   }
 
   updateRegion( position ) {
-    console.log( 'coords:', position.coords );
     const region = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
@@ -83,7 +51,13 @@ export default class Map extends Component {
   }
 
   onRegionChangeComplete( region ) {
-    console.log( 'new region:', region );
+    
+    // temporarily, just init once with place-holder data...
+
+    if ( this.state.parkingSpots.length === 0 ) {
+      const parkingSpots = availableParking( region );
+      this.setState({ parkingSpots });
+    }
   }
 
   render() {
@@ -94,11 +68,12 @@ export default class Map extends Component {
       onRegionChangeComplete={ this.onRegionChangeComplete }
       region={this.state.region}
     >
-      { this.state.mapMarkers.map( marker =>
-        <MapView.Marker key={ marker.title }
-          coordinate={ marker.coords }
-          title={ marker.title }
-          description={ marker.description }
+      { this.state.parkingSpots.map( spot =>
+        <MapView.Marker key={ spot.title }
+          coordinate={ spot.coords }
+          title={ spot.title }
+          description={ spot.description }
+          image={ mapPin_ParkingSpot }
         />
       )}
     </MapView>;
