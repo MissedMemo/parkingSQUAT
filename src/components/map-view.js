@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import MapView from 'react-native-maps';
-import { availableParking } from '../remote-comms/api';
+import { queryParkingData } from '../remote-comms/api';
 import { Dimensions, StyleSheet } from 'react-native';
 import mapPin_ParkingSpot from './map-pin.png';
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.01;
+const LATITUDE_DELTA = 0.001;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 /* RiceCell data set limited to San Francisco!
-   Suggested coords for XCode mobile simulator...
-( via Simulator menu: Debug/Location/Custom Location )
+Suggested "current position" for XCode mobile simulator...
+( set via Simulator menu: Debug/Location/Custom Location )
 latitude: 37.801242,
 longitude: -122.4012767
 */
@@ -29,35 +29,42 @@ export default class Map extends Component {
   }
 
   componentWillMount() {
-
+    
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.updateRegion( position );
+        this.initMapView( position );
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
-
-    /* Not currently tracking user's MOVEMENT (just initial position)
+    
+    /*
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      this.updateRegion( position );
+      Not currently tracking user MOVEMENT (just initial position)
     });
     */
   }
 
-  updateRegion( position ) {
+  initMapView( position ) {
     const region = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA
     };
-    this.setState({ region });
+    this.setState({ region }, () => {
+      this.showNearbyParking(region);
+    });
   }
 
-  // Update parking data when user scrolls the map
+  // handle map scroll event...
   onRegionChangeComplete( region ) {
-    availableParking( region )
+    this.setState({ region });
+    this.showNearbyParking(region);
+  }
+
+  showNearbyParking( region ) {
+    queryParkingData( region )
     .then( parkingSpots => {
       this.setState({ parkingSpots });
     });
