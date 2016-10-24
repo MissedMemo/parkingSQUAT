@@ -19,10 +19,10 @@ The application will automatically zoom to the user's detected lat-long coordina
 
 latitude: 37.801242, longitude: -122.4012767
 
-+cross-platform and actual device loading...
+San Francisco data limitation also makes it impossible to demo anything other than detection of the user's current location on an actual device.
 
 
-##Supported Features:
+##Feature Set:
 
 &nbsp;&nbsp;&#10004;&nbsp;
 zoom to user's current location (S.F. only) and show nearby parking
@@ -30,10 +30,10 @@ zoom to user's current location (S.F. only) and show nearby parking
 continually update available parking when the user scrolls the map view
 
 * display fly-out for parking spot map pins
-* navigate to details view when clicking on parking spot map pin
-* have the ability to reserve a parking spot by date and time
-* review/edit reservations from a view accessible through a tab bar button
-* be notified when reservation ends, with an option to extend.
+* navigate to details view when clicking a parking spot map pin
+* be able to reserve a parking spot by date and time
+* review & edit reservations from a view accessible through a tab bar option
+* get notified when reservation ends, with an option to extend.
  
 
 ##Building & Running:
@@ -46,5 +46,3 @@ continually update available parking when the user scrolls the map view
 ##Implementation Notes:
 
 File structure set up for IOS & Android acc. to recc'd best practices (genericized content in files index.ios.js and index.android.js at project root reference a shared 'main.js' file in the /src directory  ), but using elements that are IOS-specific, due to time constraints.
-
-Tests...
