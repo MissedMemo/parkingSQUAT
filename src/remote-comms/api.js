@@ -35,15 +35,14 @@ const parkingData = [
 
 export const availableParking = ( region ) => {
   
-  var url = '';
+  var url = 'https://ridecellparking.herokuapp.com/api/v1/parkinglocations/search?format=json&lat=37.8721366&lng=-122.2702216';
 
-  console.log( 'api call with region:', region );
+  //console.log( 'api call with region:', region );
 
-  return parkingData;
-  /*
+  //return parkingData;
+  
   return fetch( url )
     .then( response => response.json() )
     .then( data => data )
     .catch( e => console.log( 'error fetching parking data:', e ) );
-  */
 };
