@@ -40,8 +40,8 @@ export default class Map extends Component {
 
     You can set 'current location' in XCode's mobile
     simulator menu: (Debug/Location/Custom Location)
-    to lat-long coordinates close to our 'initialRegion'
-    to see a simulation of this feature.
+    to lat-long coordinates identical, or close to,
+    our 'initialRegion' to simulate this feature.
     */
 
     /*

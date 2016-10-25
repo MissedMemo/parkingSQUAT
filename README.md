@@ -15,11 +15,9 @@
 
 ###Important!
 
-The application will automatically zoom to the user's detected lat-long coordinates at startup, but RideCell parking data is limited to San Francisco. For an effective demo, please set the user's simulated current location via the XCode mobile simulator menu: (Debug/Location/Custom Location)
+Demo is currently limited to running in the XCode mobile simulator -- or loaded onto a physical IOS device, with features only accessible in the San Francisco map area (parking data currently only available for San Francisco).
 
-latitude: 37.801242, longitude: -122.4012767
-
-San Francisco data limitation also makes it impossible to demo anything other than detection of the user's current location on an actual device.
+A production version of the application would automatically zoom to the user's detected GPS coordinates on the map. To simulate this, you can set 'current location', accessible through XCode's mobile simulator menu (Debug/Location/Custom Location).  The following coordinates will place the user in the default region we use on start up: latitude: 37.801242, longitude: -122.4012767
 
 
 ##Feature Set:
