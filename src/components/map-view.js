@@ -9,57 +9,60 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.001;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-/* RiceCell data set limited to San Francisco!
-Suggested "current position" for XCode mobile simulator...
-( set via Simulator menu: Debug/Location/Custom Location )
-latitude: 37.801242,
-longitude: -122.4012767
-*/
 
 export default class Map extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      region: null,
+      initialRegion: {
+        /* ensure demo always starts in an
+        area containing actual parking data! */
+        latitude: 37.801242,
+        longitude: -122.4012767,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      },
       parkingSpots: []
     };
 
     this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
   }
 
+
   componentWillMount() {
-    
+
+    /* For reference only...
+    Since RideCell data is limited to San Francisco,
+    it currently makes no sense to try to initialize
+    our map based on user's actual GPS coordinates
+    via code similar to the below.
+
+    You can set 'current location' in XCode's mobile
+    simulator menu: (Debug/Location/Custom Location)
+    to lat-long coordinates close to our 'initialRegion'
+    to see a simulation of this feature.
+    */
+
+    /*
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.initMapView( position );
+        this.setInitialRegion( position );
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
-    
+    */
+
     /*
     this.watchID = navigator.geolocation.watchPosition((position) => {
-      Not currently tracking user MOVEMENT (just initial position)
+      //Not currently tracking user MOVEMENT!
     });
     */
   }
 
-  initMapView( position ) {
-    const region = {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-      latitudeDelta: LATITUDE_DELTA,
-      longitudeDelta: LONGITUDE_DELTA
-    };
-    this.setState({ region }, () => {
-      this.showNearbyParking(region);
-    });
-  }
-
   // handle map scroll event...
   onRegionChangeComplete( region ) {
-    this.setState({ region });
     this.showNearbyParking(region);
   }
 
@@ -70,30 +73,30 @@ export default class Map extends Component {
     });
   }
 
+  renderParkingSpots() {
+    return this.state.parkingSpots.map( spot => {
+      return <MapView.Marker key={ spot.id }
+        coordinate={{
+          latitude: parseFloat(spot.lat),
+          longitude: parseFloat(spot.lng)
+        }}
+        title={ spot.name }
+        description={ 'no description' }
+        image={ mapPin_ParkingSpot }
+      />;
+    });
+  }
+
   render() {
-    if ( !this.state.region ) {
-      return null;
-    } else {
-      return <MapView 
-        style = {styles.map}
-        showsUserLocation = {true}
-        followUserLocation={true}
-        onRegionChangeComplete={ this.onRegionChangeComplete }
-        region={this.state.region}
-      >
-        { this.state.parkingSpots.map( spot => {
-          return <MapView.Marker key={ spot.id }
-            coordinate={{
-              latitude: parseFloat(spot.lat),
-              longitude: parseFloat(spot.lng)
-            }}
-            title={ spot.name }
-            description={ 'no description' }
-            image={ mapPin_ParkingSpot }
-          />;
-        })}
-      </MapView>;
-    }
+    return <MapView 
+      style = {styles.map}
+      showsUserLocation = {true}
+      followUserLocation={true}
+      onRegionChangeComplete={ this.onRegionChangeComplete }
+      initialRegion={this.state.initialRegion}
+    >
+      { this.renderParkingSpots() }
+    </MapView>;
   }
 }
 
