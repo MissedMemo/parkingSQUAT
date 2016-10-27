@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import MapView from 'react-native-maps';
-import { queryParkingData } from '../remote-comms/api';
 import { Dimensions, StyleSheet } from 'react-native';
-import mapPin_ParkingSpot from './map-pin.png';
+
+import { queryParkingData } from '../remote-comms/api';
+import CustomMarker from './map-marker';
+import CustomCallout from './map-callout';
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.001;
+const LATITUDE_DELTA = 0.005;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 
@@ -80,10 +82,12 @@ export default class Map extends Component {
           latitude: parseFloat(spot.lat),
           longitude: parseFloat(spot.lng)
         }}
-        title={ spot.name }
-        description={ 'no description' }
-        image={ mapPin_ParkingSpot }
-      />;
+      >
+        <CustomMarker {...spot} />
+        <MapView.Callout style={ styles.callout }>
+          <CustomCallout {...spot} />
+        </MapView.Callout>
+      </MapView.Marker>;
     });
   }
 
@@ -100,8 +104,16 @@ export default class Map extends Component {
   }
 }
 
+/*
+  Need to explicitly set Callout width is an open BUG in React Native!
+  (see https://github.com/airbnb/react-native-maps/issues/427 ) 
+*/
+
 const styles = StyleSheet.create({
   map: {
-    flex: 1
+    ...StyleSheet.absoluteFillObject
+  }, 
+  callout: {
+    width: 200
   }
 });
